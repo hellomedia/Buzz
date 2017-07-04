@@ -20,6 +20,11 @@ class Curl extends AbstractCurl
         $this->lastCurl = static::createCurlHandle();
         $this->prepare($this->lastCurl, $request, $options);
 
+        // addition 4/7/17
+        // https://github.com/facebook/php-graph-sdk/issues/566#issuecomment-243023397
+        curl_setopt($this->lastCurl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        curl_setopt($this->lastCurl, CURLOPT_TIMEOUT, 30);
+        
         $data = curl_exec($this->lastCurl);
 
         if (false === $data) {
